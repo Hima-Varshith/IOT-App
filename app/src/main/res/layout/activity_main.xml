@@ -14,14 +14,13 @@
         android:layout_weight="0.97"
         tools:ignore="InefficientWeight" />
 
-    <Button
-        android:id="@+id/scanButton"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"
-        android:layout_margin="20dp"
-        android:background="@android:color/holo_blue_light"
-        android:text="Scan WiFi"
-        android:textColor="@color/white"
-        tools:ignore="HardcodedText" />
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:layout_margin="15dp"
+            android:background="@android:color/holo_red_light"
+            android:text="SCAN WIFI" />
+
 </LinearLayout>

@@ -10,6 +10,7 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -33,11 +34,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         buttonScan = findViewById(R.id.scanButton);
-        buttonScan.setOnClickListener(new View.OnClickListener()
-        {
+        buttonScan.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 scanWifi();
             }
         });
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, arrayList);
         listView.setAdapter(adapter);
-        //scanWifi();
+        scanWifi();
     }
 
     private void scanWifi(){
@@ -71,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
             results = wifiManager.getScanResults();
             unregisterReceiver(this);
 
-            for(ScanResult scanResult : results){
+            for(ScanResult scanResult : results)
+            {
                 arrayList.add(scanResult.SSID + "-" + scanResult.capabilities);
                 adapter.notifyDataSetChanged();
             }
