@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -32,13 +33,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        buttonScan = findViewById(R.id.scanButton);
-        buttonScan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                scanWifi();
-            }
-        });
+        buttonScan = (Button) findViewById(R.id.scanButton);
+        buttonScan.setOnClickListener(new MyClass());
 
         listView = findViewById(R.id.wifiList);
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
@@ -54,9 +50,19 @@ public class MainActivity extends AppCompatActivity {
         scanWifi();
     }
 
-    private void scanWifi(){
+    public class MyClass implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            scanWifi();
+        }
+    }
+
+    private void scanWifi()
+    {
         arrayList.clear();
         registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        Log.i("hello", String.valueOf(wifiReceiver));
+        Log.i("hello", String.valueOf(wifiManager));
         wifiManager.startScan();
         Toast.makeText(this, "Scanning Nearby WiFi Networks",Toast.LENGTH_SHORT).show();
     }
@@ -68,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         {
             results = wifiManager.getScanResults();
             unregisterReceiver(this);
+            Log.i("hello", String.valueOf(results));
 
             for(ScanResult scanResult : results)
             {
