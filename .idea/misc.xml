@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Hello/AndroidStudioProjects/IOT_Application/app/src/main/res/layout/actibity_main.xml" value="0.1546875" />
         <entry key="..\:/Users/Hello/AndroidStudioProjects/IOT_Application/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/Hello/AndroidStudioProjects/IOT_Application/app/src/main/res/layout/layout1_scanwifi.xml" value="0.1546875" />
+        <entry key="..\:/Users/Hello/AndroidStudioProjects/IOT_Application/app/src/main/res/layout/layout2_mac.xml" value="0.20572916666666666" />
         <entry key="..\:/Users/Hello/AndroidStudioProjects/IOT_Application/app/src/main/res/layout/row.xml" value="0.2" />
       </map>
     </option>
