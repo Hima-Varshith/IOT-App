@@ -14,6 +14,7 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -22,7 +23,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -53,20 +57,21 @@ public class MainActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.wifiList);
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
-        if (!wifiManager.isWifiEnabled()) {
-            Toast toast = Toast.makeText(this, "Wifi is not enabled on your device.... We are enabling it", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER, 0, 50);
+        if (!wifiManager.isWifiEnabled())
+        {
+            Toast toast = Toast.makeText(this, "Wifi is not enabled on your device.... Please enable it", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 200);
             toast.show();
-            wifiManager.setWifiEnabled(true);
         }
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
         listView.setAdapter(adapter);
     }
 
-    public void layoutTwoButton(View view) {
+    public void layoutTwoButton(View view)
+    {
         setContentView(R.layout.layout2_mac);
-        wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        wifiManager = (WifiManager) this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         TextView firstLine = (TextView) findViewById(R.id.line1);
         TextView secondLine = (TextView) findViewById(R.id.line2);
         TextView thirdLine = (TextView) findViewById(R.id.line3);
@@ -74,10 +79,10 @@ public class MainActivity extends AppCompatActivity {
         {
             WifiInfo wifiInfo = wifiManager.getConnectionInfo();
             String wifiName = wifiInfo.getSSID();
-            @SuppressLint("MissingPermission") String macAddress = wifiInfo.getMacAddress();
+            String macAddress = wifiInfo.getBSSID();
             firstLine.setText("CURRENT WI-FI :");
             secondLine.setText(wifiName);
-            thirdLine.setText("Connected to MAC Address :" + macAddress);
+            thirdLine.setText("Connected to MAC Address : " + macAddress.toUpperCase());
         }
         else {
             firstLine.setText("CURRENT WI-FI :");
@@ -99,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
         wifiManager.startScan();
         Toast toast = Toast.makeText(this, "Scanning Nearby WiFi Networks",Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 50);
+        toast.setGravity(Gravity.CENTER, 0, 200);
         toast.show();
     }
 

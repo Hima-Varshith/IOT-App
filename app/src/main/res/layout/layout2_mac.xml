@@ -30,12 +30,13 @@
 
     <TextView
         android:id="@+id/line3"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
         android:layout_marginTop="15dp"
         android:text="MAC ADDRESS"
+        android:textColor="@color/black"
+        android:textSize="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line2" />
 </androidx.constraintlayout.widget.ConstraintLayout>
