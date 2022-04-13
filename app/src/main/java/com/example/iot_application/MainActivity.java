@@ -25,6 +25,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -104,29 +108,41 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.layout3_scandevice);
         listView2 = findViewById(R.id.listDevices);
         deviceList.clear();
+
+        BufferedReader bufferedReader = null;
         try
         {
-            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();)
+            bufferedReader = new BufferedReader(new FileReader("/proc/net/arp"));
+
+            String line;
+
+            while ((line = bufferedReader.readLine()) != null)
             {
-                NetworkInterface intF = en.nextElement();
-                for (Enumeration<InetAddress> enumIpAdd = intF.getInetAddresses(); enumIpAdd.hasMoreElements();)
-                {
-                    String res = null;
-                    InetAddress inetAddress = enumIpAdd.nextElement();
-                    if (!inetAddress.isLoopbackAddress())
+                String[] splitted = line.split(" +");
+                if (splitted != null && splitted.length >= 4) {
+                    String ip = splitted[0];
+                    String mac = splitted[3];
+                    if (mac.matches("..:..:..:..:..:.."))
                     {
-                        res = "Name : " + inetAddress.getHostName();
-                        res += ("IP Address : " + inetAddress.getHostAddress());
-                        res += ("MAC Address : " + inetAddress.getAddress());
-                    }
-                    if(res != null)
-                    {
-                        deviceList.add(res);
+                        deviceList.add("ipaddress :" + ip);
+                        deviceList.add("mac address: " + mac);
                     }
                 }
             }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally
+        {
+            try
+            {
+                bufferedReader.close();
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
-        catch (SocketException ex) {}
         deviceAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, deviceList);
         listView2.setAdapter(deviceAdapter);
     }
