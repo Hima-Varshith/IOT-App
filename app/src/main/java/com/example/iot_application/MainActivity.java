@@ -25,24 +25,33 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private WifiManager wifiManager;
     private ListView listView;
+    private ListView listView2;
     public Button buttonOne;
     public Button buttonTwo;
     private Button buttonScan;
     private int size = 0;
     private List<ScanResult> results;
     private ArrayList<String> arrayList = new ArrayList<>();
+    private ArrayList<String> deviceList = new ArrayList<>();
     private ArrayAdapter adapter;
-    private Button buttonThree;
+    private ArrayAdapter deviceAdapter;
+    public Button buttonThree;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +103,48 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     
-    public void layoutThreeButton(View view){
+    public void layoutThreeButton(View view)
+    {
         setContentView(R.layout.layout3_scandevice);
+        listView2 = findViewById(R.id.listDevices);
+        deviceList.clear();
+
+        BufferedReader bufferedReader = null;
+        try
+        {
+            bufferedReader = new BufferedReader(new FileReader("/proc/net/arp"));
+
+            String line;
+
+            while ((line = bufferedReader.readLine()) != null)
+            {
+                String[] splitted = line.split(" +");
+                if (splitted != null && splitted.length >= 4) {
+                    String ip = splitted[0];
+                    String mac = splitted[3];
+                    if (mac.matches("..:..:..:..:..:.."))
+                    {
+                        deviceList.add("ipaddress :" + ip);
+                        deviceList.add("mac address: " + mac);
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally
+        {
+            try
+            {
+                bufferedReader.close();
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        deviceAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, deviceList);
+        listView2.setAdapter(deviceAdapter);
     }
 
     public class MyClass implements View.OnClickListener {

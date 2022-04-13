@@ -8,13 +8,13 @@
     tools:context=".MainActivity">
 
     <ListView
+        android:id="@+id/wifiList"
         android:layout_width="match_parent"
         android:layout_height="312dp"
-        android:id="@+id/wifiList"
         android:layout_weight="0.97"
         tools:ignore="InefficientWeight" />
 
-        <Button
+    <Button
             android:id="@+id/scanButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
