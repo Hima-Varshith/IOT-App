@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
     
     public void layoutThreeButton(View view){
         setContentView(R.layout.layout3_scandevice);
+
     }
 
     public class MyClass implements View.OnClickListener {
