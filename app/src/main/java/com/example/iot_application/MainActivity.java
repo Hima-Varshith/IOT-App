@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             while ((line = bufferedReader.readLine()) != null)
             {
                 String[] splitted = line.split(" +");
-                if (splitted != null && splitted.length >= 4) {
+                if (splitted.length >= 4) {
                     String ip = splitted[0];
                     String mac = splitted[3];
                     if (mac.matches("..:..:..:..:..:.."))
@@ -129,15 +129,15 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally
         {
             try
             {
-                bufferedReader.close();
+                if (bufferedReader != null) {
+                    bufferedReader.close();
+                }
             } catch (IOException e)
             {
                 e.printStackTrace();

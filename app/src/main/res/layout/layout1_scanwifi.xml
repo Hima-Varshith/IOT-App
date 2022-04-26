@@ -15,12 +15,12 @@
         tools:ignore="InefficientWeight" />
 
     <Button
-            android:id="@+id/scanButton"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="bottom"
-            android:layout_margin="15dp"
-            android:background="@android:color/holo_red_light"
-            android:text="SCAN WIFI" />
+        android:id="@+id/scanButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_margin="15dp"
+        android:background="@android:color/holo_red_light"
+        android:text="SCAN WIFI" />
 
 </LinearLayout>
