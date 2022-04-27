@@ -40,13 +40,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private WifiManager wifiManager;
-    private ListView listView;
-    private ListView listView2;
     public Button buttonOne;
     public Button buttonTwo;
-    private Button buttonScan;
-    private int size = 0;
-    private List<ScanResult> results;
     private ArrayList<String> arrayList = new ArrayList<>();
     private ArrayList<String> deviceList = new ArrayList<>();
     private ArrayAdapter adapter;
@@ -64,10 +59,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void layoutOneButton(View view) {
         setContentView(R.layout.layout1_scanwifi);
-        buttonScan = findViewById(R.id.scanButton);
+        Button buttonScan = findViewById(R.id.scanButton);
         buttonScan.setOnClickListener(new MyClass());
 
-        listView = findViewById(R.id.wifiList);
+        ListView listView = findViewById(R.id.wifiList);
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
         if (!wifiManager.isWifiEnabled())
@@ -80,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemClickListener((parent, view1, position, id) -> startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS)));
     }
 
+    @SuppressLint("SetTextI18n")
     public void layoutTwoButton(View view)
     {
         setContentView(R.layout.layout2_mac);
@@ -102,11 +98,11 @@ public class MainActivity extends AppCompatActivity {
             thirdLine.setText("You need to connect to a Wi-Fi network for finding the mac address");
         }
     }
-    
+
     public void layoutThreeButton(View view)
     {
         setContentView(R.layout.layout3_scandevice);
-        listView2 = findViewById(R.id.listDevices);
+        ListView listView2 = findViewById(R.id.listDevices);
         deviceList.clear();
 
         BufferedReader bufferedReader = null;
@@ -124,8 +120,9 @@ public class MainActivity extends AppCompatActivity {
                     String mac = splitted[3];
                     if (mac.matches("..:..:..:..:..:.."))
                     {
-                        deviceList.add("ipaddress :" + ip);
-                        deviceList.add("mac address: " + mac);
+                        deviceList.add("IP address : " + ip
+                                + "                            "
+                                + "MAC address : " + mac);
                     }
                 }
             }
@@ -174,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent)
         {
-            results = wifiManager.getScanResults();
+            List<ScanResult> results = wifiManager.getScanResults();
             unregisterReceiver(this);
 
             for(ScanResult scanResult : results)

@@ -16,7 +16,8 @@
         android:text="SCAN WIFI (OR) CONNECT TO WIFI"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText,UsingOnClickInXml" />
 
     <Button
         android:id="@+id/button2"
@@ -29,7 +30,8 @@
         android:text="DISPLAY MAC ADDRESS"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText,UsingOnClickInXml" />
 
     <Button
         android:id="@+id/button3"
@@ -42,5 +44,6 @@
         android:text="SCAN DEVICES IN NETWORK"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/button2"
+        tools:ignore="HardcodedText,UsingOnClickInXml" />
 </androidx.constraintlayout.widget.ConstraintLayout>
