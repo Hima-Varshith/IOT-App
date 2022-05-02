@@ -81,6 +81,12 @@ public class MainActivity extends AppCompatActivity {
         buttonEight = findViewById(R.id.button8);
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        setContentView(R.layout.activity_main);
+    }
+
     public void layoutOneButton(View view) {
         setContentView(R.layout.layout1_scanwifi);
         Button buttonScan = findViewById(R.id.scanButton);
@@ -171,7 +177,17 @@ public class MainActivity extends AppCompatActivity {
     public void layoutFourButton(View view)
     {
         setContentView(R.layout.layout4_get);
-
+        wifiManager = (WifiManager) this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        TextView line = findViewById(R.id.macAddress);
+        if (!wifiManager.isWifiEnabled())
+        {
+            line.setText("NOT CONNECTED TO ANY SERVER");
+            Toast.makeText(this,"Please connect to a Server / IOT Device",Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            line.setText("A0:20:A6:19:47:D8");
+        }
     }
 
     public void layoutFiveButton(View view)
@@ -291,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkCredentials()
     {
-        Toast.makeText(this,"Success Response: OK",Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"Details sent to server successfully",Toast.LENGTH_LONG).show();
         credone.setText("");
         credtwo.setText("");
     }
