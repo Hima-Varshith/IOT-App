@@ -1,5 +1,6 @@
 package com.example.iot_application;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -26,6 +27,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.budiyev.android.codescanner.CodeScanner;
+import com.budiyev.android.codescanner.CodeScannerView;
+import com.budiyev.android.codescanner.DecodeCallback;
+import com.google.zxing.Result;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -41,6 +47,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private WifiManager wifiManager;
+    private CodeScanner qrCodeScanner;
     public Button buttonOne;
     public Button buttonTwo;
     private ArrayList<String> arrayList = new ArrayList<>();
@@ -166,6 +173,49 @@ public class MainActivity extends AppCompatActivity {
         buttonCheck.setOnClickListener(new MyClass2());
     }
 
+    public void layoutEightButton(View view){
+        setContentView(R.layout.layout8_qr);
+        CodeScannerView scannerView = findViewById(R.id.qr_scanner);
+        qrCodeScanner = new CodeScanner(this,scannerView);
+
+        qrCodeScanner.setDecodeCallback(new DecodeCallback()
+        {
+            @Override
+            public void onDecoded(@NonNull final Result result)
+            {
+                runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        Toast.makeText(MainActivity.this, result.getText(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        scannerView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                qrCodeScanner.startPreview();
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        qrCodeScanner.startPreview();
+    }
+
+    @Override
+    protected void onPause() {
+        qrCodeScanner.releaseResources();
+        super.onPause();
+    }
+
     public class MyClass implements View.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -176,13 +226,6 @@ public class MainActivity extends AppCompatActivity {
     public class MyClass2 implements View.OnClickListener{
         @Override
         public void onClick(View v) { checkCredentials();}
-    }
-
-    private void checkCredentials()
-    {
-        Toast.makeText(this,"Success Response: OK",Toast.LENGTH_LONG).show();
-        credone.setText("");
-        credtwo.setText("");
     }
 
     private void scanWifi()
@@ -198,6 +241,13 @@ public class MainActivity extends AppCompatActivity {
             wifiManager.startScan();
             Toast.makeText(this, "Scanning Nearby WiFi Networks",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void checkCredentials()
+    {
+        Toast.makeText(this,"Success Response: OK",Toast.LENGTH_LONG).show();
+        credone.setText("");
+        credtwo.setText("");
     }
 
     BroadcastReceiver wifiReceiver = new BroadcastReceiver()
