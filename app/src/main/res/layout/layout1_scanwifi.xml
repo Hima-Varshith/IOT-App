@@ -21,7 +21,6 @@
         android:layout_gravity="bottom"
         android:layout_margin="15dp"
         android:background="@android:color/holo_red_light"
-        android:text="SCAN WIFI"
-        android:textColor="#212121" />
+        android:text="SCAN WIFI" />
 
 </LinearLayout>
