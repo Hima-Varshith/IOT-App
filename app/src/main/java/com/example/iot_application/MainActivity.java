@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter adapter;
     private ArrayAdapter deviceAdapter;
     public Button buttonThree;
+    public Button buttonFour;
+    public Button buttonFive;
+    public EditText credone;
+    public EditText credtwo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         buttonOne = findViewById(R.id.button1);
         buttonTwo = findViewById(R.id.button2);
         buttonThree = findViewById(R.id.button3);
+        buttonFour = findViewById(R.id.button4);
+        buttonFive = findViewById(R.id.button5);
     }
 
     public void layoutOneButton(View view) {
@@ -144,11 +151,38 @@ public class MainActivity extends AppCompatActivity {
         listView2.setAdapter(deviceAdapter);
     }
 
+    public void layoutFourButton(View view)
+    {
+        setContentView(R.layout.layout4_get);
+
+    }
+
+    public void layoutFiveButton(View view)
+    {
+        setContentView(R.layout.layout5_pass);
+        credone = findViewById(R.id.editTextSSID);
+        credtwo = findViewById(R.id.editTextPassword);
+        Button buttonCheck = findViewById(R.id.checkButton);
+        buttonCheck.setOnClickListener(new MyClass2());
+    }
+
     public class MyClass implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             scanWifi();
         }
+    }
+
+    public class MyClass2 implements View.OnClickListener{
+        @Override
+        public void onClick(View v) { checkCredentials();}
+    }
+
+    private void checkCredentials()
+    {
+        Toast.makeText(this,"Success Response: OK",Toast.LENGTH_LONG).show();
+        credone.setText("");
+        credtwo.setText("");
     }
 
     private void scanWifi()
