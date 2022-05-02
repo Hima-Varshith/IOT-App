@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
         TextView line = findViewById(R.id.macAddress);
         if (!wifiManager.isWifiEnabled())
         {
-            line.setText("NOT CONNECTED TO ANY SERVER");
+            line.setText("NOT CONNECTED");
             Toast.makeText(this,"Please connect to a Server / IOT Device",Toast.LENGTH_LONG).show();
         }
         else
